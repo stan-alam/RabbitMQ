@@ -83,7 +83,63 @@ from the exchange to particular queues.
 to be consumed. Consumers receive messages from a particular queue in one of two ways:**
 
   1. By subscribing to a via the *basic.consume*  AMQP command. Sets the channel for receive use until unsubscribed from
-  the queue.
+  the queue. The channel will be set to receive mode until a unsubscribed from the queue. While subscribed,
+  your consumer will automatically receive another message from the queue, after consuming (or rejecting) the last
+  received message. Use the basic.consume if your consumer is processing many messages out of the queue and/or needs to
+  automatically receive message from a queue as soon as they arrive.
 
   2. When not persistently subscribed. Requesting a single message from the queue is done by
-  the (basic.get) **AMQP** command
+  the (basic.get) **AMQP** command. This will cause the consumer to receive the next message in the queue and then not
+  receive anymore messages until another basic.get is called. DON't USE basic.get in a loop as a substitute to
+  basic.consume, **basic.get is resource intensive in comparison to basic.consume**
+
+  When using RabbitMQ 2.x use the basic.reject AMQP command basic.reject allows the consumer to reject a message RabbitMQ
+  has sent. Based on certain rules -- RabbitMQ will decide to which queue it should deliver the message. Those rules are
+  called *routing keys*. A queue is said to be *bound* to an exchange by a routing key. When you send a message to the broker,
+  it will have a routing key -- even a blank one -- which RabbitMQ will try to match to the routing keys used in the bindings
+  If they match, the message will be delivered to the queue. If the routing message doesn't match any of binding patterns,
+  it'll be black-holed. **both your producers and consumers should attempt to create the queues that will be needed**
+
+  You can implement logic to allow for messages to be lost and a way to republish those messages.
+  Queues are the foundational block of AMQP messaging :
+
+    * They give you a place for messages to wait for consumption
+    * Queues are great for load balancing. **you can attach many consumers and
+    let RabbitMQ round-robin incoming messages evenly among them**
+    * They're the final endpoint for any messages in RabbitMQ (unless they are black-holed)
+
+## Exchange and bindings
+
+AMQP bindings and exchanges. When a message is delivered to a queue, you do it by sending it to the exchange.
+Then based on the rules/criteria of the routing RabbitMQ will decide to which queue it should deliver the message
+A queue is said to be *bound* to an exchange by a routing key. By sending a message to the broker, it'll have a routing-key
+Rules are like setting up junk-mail for email. Spam goes to junk-mail.
+
+AMQP can accommodate cases when you can bind a queue to an exchange with no routing key and then every message with no routing key that
+is sent will be to that particular exchange will be delivered to said queue just like email.
+
+**Complex use cases that involve publish/subscribe or multicast can be achieved.**
+
+
+          The publisher—the process that is sending messages to the
+          broker—doesn’t have to care about the logic on the other side of the broker (the
+          queues and consumers involved in processing the messages). As you’ll see, this can
+          lead to interesting messaging scenarios that aren’t possible—or are very hard to
+          Getting together: exchanges and bindings 21
+          accomplish—with a broker that only
+          allows you to publish directly to queues.
+
+
+# There are four different exchanges provided by the protocol.
+
+## Direct   
+
+## Fanout
+
+## Topic
+
+## Headers
+-------------------------------------------------------------------------------------------------------------------------------------------------
+# Direct   
+
+  * simple: if the routing key matches, then the message is delivered to the corresponding queues
