@@ -4,6 +4,69 @@
 
 ## Rabbit MQ is focused on application-to-application messaging**
 
+
+```shell
+$ sudo rabbitmqctl status
+[sudo] password for benAdams: 
+Status of node rabbit@benAdams
+[{pid,3222},
+ {running_applications,
+     [{rabbit,"RabbitMQ","3.6.12"},
+      {ranch,"Socket acceptor pool for TCP protocols.","1.3.0"},
+      {ssl,"Erlang/OTP SSL application","8.0.3"},
+      {public_key,"Public key infrastructure","1.2"},
+      {asn1,"The Erlang ASN1 compiler version 4.0.4","4.0.4"},
+      {mnesia,"MNESIA  CXC 138 12","4.14.1"},
+      {crypto,"CRYPTO","3.7.1"},
+      {os_mon,"CPO  CXC 138 46","2.4.1"},
+      {rabbit_common,
+          "Modules shared by rabbitmq-server and rabbitmq-erlang-client",
+          "3.6.12"},
+      {xmerl,"XML parser","1.3.12"},
+      {compiler,"ERTS  CXC 138 10","7.0.2"},
+      {syntax_tools,"Syntax tools","2.1"},
+      {sasl,"SASL  CXC 138 11","3.0.1"},
+      {stdlib,"ERTS  CXC 138 10","3.1"},
+      {kernel,"ERTS  CXC 138 10","5.1"}]},
+ {os,{unix,linux}},
+ {erlang_version,
+     "Erlang/OTP 19 [erts-8.1] [source-e7be63d] [64-bit] [async-threads:64] [hipe] [kernel-poll:true]\n"},
+ {memory,
+     [{connection_readers,0},
+      {connection_writers,0},
+      {connection_channels,0},
+      {connection_other,0},
+      {queue_procs,2688},
+      {queue_slave_procs,0},
+      {plugins,0},
+      {other_proc,16911480},
+      {metrics,42304},
+      {mgmt_db,0},
+      {mnesia,58016},
+      {other_ets,1941768},
+      {binary,37880},
+      {msg_index,39344},
+      {code,21254523},
+      {atom,891849},
+      {other_system,19035444},
+      {total,60215296}]},
+ {alarms,[]},
+ {listeners,[{clustering,25672,"::"},{amqp,5672,"::"}]},
+ {vm_memory_calculation_strategy,rss},
+ {vm_memory_high_watermark,0.4},
+ {vm_memory_limit,839027916},
+ {disk_free_limit,50000000},
+ {disk_free,88810905600},
+ {file_descriptors,
+     [{total_limit,924},{total_used,2},{sockets_limit,829},{sockets_used,0}]},
+ {processes,[{limit,1048576},{used,146}]},
+ {run_queue,0},
+ {uptime,60030},
+ {kernel,{net_ticktime,60}}]
+
+```
+
+
 **PUB/SUB or Consumers and producers**
 
         Rabbit as a delivery service.
