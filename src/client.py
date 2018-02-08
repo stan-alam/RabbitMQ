@@ -18,3 +18,14 @@ technical implementation tasks required by the NYSE street publisher to complete
 
 
 */
+
+import pika
+credentials = pika.PlainCredentials("stan", "guest")
+conn_params = pika.ConnectionParameters("localhost",  credentials = credentials)
+conn_broker = pika.BlockingConnection(conn_params)
+channel.exchange_declare(exchange = "NYSE",
+                        type="direct",
+                        passive=False,
+                        durable=True,
+                        auto_delete=False)
+channel.queue_declare(queue="client")
