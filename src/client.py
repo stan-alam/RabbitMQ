@@ -1,4 +1,4 @@
-/*
+"""
 
 technical implementation tasks required by the NYSE street publisher to complete
 
@@ -17,7 +17,7 @@ technical implementation tasks required by the NYSE street publisher to complete
 7. Close the connection
 
 
-*/
+"""
 
 import pika
 credentials = pika.PlainCredentials("stan", "guest")
